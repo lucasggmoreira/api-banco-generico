@@ -1,6 +1,7 @@
 package me.lucasggmoreira.banco.infra.exception;
 
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.EntityNotFoundException;
 import me.lucasggmoreira.banco.infra.exception.custom.DadoInvalidoException;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+@Hidden
 @RestControllerAdvice
 public class TratamentoDeExceptions {
 

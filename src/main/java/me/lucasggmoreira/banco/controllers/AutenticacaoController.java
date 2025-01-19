@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 
 @RestController
@@ -32,9 +33,10 @@ public class AutenticacaoController {
 
     @PostMapping("/cadastro")
     @Transactional
-    public ResponseEntity<DadosDetalheConta> cadastro(DadosCadastroConta dados){
+    public ResponseEntity<DadosDetalheConta> cadastro(@RequestBody @Valid DadosCadastroConta dados, UriComponentsBuilder uriBuilder){
         var retorno = autenticacao.cadastro(dados);
-        return ResponseEntity.ok(retorno);
+        var uri = uriBuilder.path("/contas/{id}").buildAndExpand(retorno.id()).toUri();
+        return ResponseEntity.created(uri).body(retorno);
     }
 
 

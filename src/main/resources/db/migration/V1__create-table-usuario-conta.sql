@@ -1,5 +1,6 @@
-CREATE TABLE usuario (
+CREATE TABLE USUARIOS (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    tipo_conta VARCHAR(255) NOT NULL,
     login VARCHAR(255) NOT NULL,
     senha VARCHAR(255) NOT NULL
 );
@@ -9,8 +10,8 @@ CREATE TABLE conta_bancaria (
     nome VARCHAR(255) NOT NULL,
     cpf VARCHAR(11) NOT NULL,
     agencia INT NOT NULL DEFAULT 1,
-    conta VARCHAR(255) UNIQUE NOT NULL,
+    conta VARCHAR(255) NOT NULL,
     saldo DOUBLE NOT NULL DEFAULT 0,
     usuario_id BIGINT,
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+    FOREIGN KEY (usuario_id) REFERENCES USUARIOS(id)
 );
