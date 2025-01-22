@@ -24,7 +24,6 @@ public class SecurityConfigurations{
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll();
                     req.requestMatchers("/auth/**").permitAll();
-                    req.requestMatchers("test/teste2").hasAnyRole("ADMIN");
                     req.anyRequest().authenticated();
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

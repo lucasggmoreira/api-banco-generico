@@ -2,6 +2,8 @@ package me.lucasggmoreira.banco.domain.usuario;
 
 import jakarta.persistence.*;
 import lombok.*;
+import me.lucasggmoreira.banco.domain.contabancaria.ContaBancaria;
+import me.lucasggmoreira.banco.domain.contabancaria.funcoes.GeradorNumeroConta;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +28,10 @@ public class Usuario implements UserDetails {
     private TipoConta tipoConta;
     private String login;
     private String senha;
+
+    @OneToOne()
+    @JoinColumn(name = "conta_bancaria_id")
+    private ContaBancaria contaBancaria;
 
     public Usuario(String login, String senha) {
         this.login = login;

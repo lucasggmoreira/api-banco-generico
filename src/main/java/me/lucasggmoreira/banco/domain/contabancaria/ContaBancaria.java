@@ -1,10 +1,15 @@
 package me.lucasggmoreira.banco.domain.contabancaria;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import me.lucasggmoreira.banco.domain.transacoes.Transacao;
 import me.lucasggmoreira.banco.domain.usuario.DadosCadastroConta;
 import me.lucasggmoreira.banco.domain.usuario.Usuario;
+import me.lucasggmoreira.banco.infra.exception.custom.DadoInvalidoException;
+
+import java.util.List;
 
 
 @Table(name = "conta_bancaria")
@@ -13,6 +18,7 @@ import me.lucasggmoreira.banco.domain.usuario.Usuario;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Getter
+@Setter
 public class ContaBancaria {
 
     @Id
@@ -20,23 +26,42 @@ public class ContaBancaria {
     private Long id;
     private String nome;
     private String cpf;
-    private int agencia = 1;
 
-    @Column(unique = true, nullable = false)
-    private String conta;
-
-    private double saldo;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne()
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+    @Column(unique = true, nullable = false)
+    private String conta;
+    private int agencia = 1;
+    private double saldo;
 
-    public ContaBancaria(DadosCadastroConta dados, Usuario usuario) {
+    @OneToMany(mappedBy = "contaBancaria")
+    @JsonIgnore
+    private List<Transacao> transacoes;
+
+    public ContaBancaria(DadosCadastroConta dados, String numeroConta) {
         this.nome = dados.nome();
         this.cpf = dados.cpf();
-        this.conta = "1";
+        this.conta = numeroConta;
         this.saldo = 0;
-        this.usuario = usuario;
+    }
+
+    public void depositar(double valor){
+        if (valor <= 0){
+            throw new DadoInvalidoException("O valor do depósito deve ser maior do que 0!");
+        }
+        this.saldo += valor;
+    }
+
+    public void sacar(double valor){
+        if (valor <= 0){
+            throw new DadoInvalidoException("O valor do saque deve ser maior do que 0!");
+        }
+        if (this.saldo < valor){
+            throw new DadoInvalidoException("Saldo insuficiente!");
+        }
+        this.saldo -= valor;
     }
 
 }
