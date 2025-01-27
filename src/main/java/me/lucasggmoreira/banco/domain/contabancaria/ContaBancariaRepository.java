@@ -1,18 +1,11 @@
 package me.lucasggmoreira.banco.domain.contabancaria;
 
-import me.lucasggmoreira.banco.domain.usuario.Usuario;
+import me.lucasggmoreira.banco.domain.usuario.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Optional;
 
 public interface ContaBancariaRepository extends JpaRepository<ContaBancaria, Long> {
-    UserDetails findByConta(String conta);
-
     ContaBancaria findByUsuario(Usuario usuario);
-
-    @Query("SELECT u FROM Usuario u JOIN FETCH u.contaBancaria WHERE u.id = :id")
-    Optional<Usuario> buscarUsuarioComConta(@Param("id") Long id);
+    ContaBancaria findByCpf(String cpf);
+    ContaBancaria findByNumeroConta(String agencia);
+    ContaBancaria findByAgenciaAndNumeroConta(int numeroConta, String agencia);
 }

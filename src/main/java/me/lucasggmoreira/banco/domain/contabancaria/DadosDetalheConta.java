@@ -9,6 +9,6 @@ public record DadosDetalheConta(
     String email
 ) {
     public DadosDetalheConta(ContaBancaria conta) {
-        this(conta.getId(), conta.getNome(), conta.getAgencia(), conta.getConta(), conta.getCpf(), conta.getUsuario().getUsername());
+        this(conta.getId(), conta.getNome(), conta.getAgencia(), conta.getNumeroConta(), conta.getCpf(), conta.getUsuario().getUsername());
     }
 }

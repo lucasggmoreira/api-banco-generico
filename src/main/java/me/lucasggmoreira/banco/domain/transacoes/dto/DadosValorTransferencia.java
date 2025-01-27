@@ -1,6 +1,5 @@
-package me.lucasggmoreira.banco.domain.transacoes;
+package me.lucasggmoreira.banco.domain.transacoes.dto;
 
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 public record DadosValorTransferencia(

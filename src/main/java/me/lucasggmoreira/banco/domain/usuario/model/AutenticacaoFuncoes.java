@@ -1,9 +1,12 @@
-package me.lucasggmoreira.banco.domain.usuario;
+package me.lucasggmoreira.banco.domain.usuario.model;
 
 import me.lucasggmoreira.banco.domain.contabancaria.ContaBancaria;
 import me.lucasggmoreira.banco.domain.contabancaria.ContaBancariaRepository;
 import me.lucasggmoreira.banco.domain.contabancaria.DadosDetalheConta;
 import me.lucasggmoreira.banco.domain.contabancaria.funcoes.GeradorNumeroConta;
+import me.lucasggmoreira.banco.domain.usuario.UsuarioRepository;
+import me.lucasggmoreira.banco.domain.usuario.dto.DadosAutenticacao;
+import me.lucasggmoreira.banco.domain.usuario.dto.DadosCadastroConta;
 import me.lucasggmoreira.banco.domain.usuario.validacoes.ValidacaoContaBancaria;
 import me.lucasggmoreira.banco.infra.security.DadosTokenJWT;
 import me.lucasggmoreira.banco.infra.security.TokenService;
@@ -54,6 +57,8 @@ public class AutenticacaoFuncoes {
         conta.setUsuario(usuario);
         contaBancariaRepository.save(conta);
         return new DadosDetalheConta(conta);
+
+
     }
 
     public DadosTokenJWT login(DadosAutenticacao dados){

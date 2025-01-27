@@ -4,15 +4,15 @@ package me.lucasggmoreira.banco.domain.contabancaria;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import me.lucasggmoreira.banco.domain.transacoes.Transacao;
-import me.lucasggmoreira.banco.domain.usuario.DadosCadastroConta;
-import me.lucasggmoreira.banco.domain.usuario.Usuario;
+import me.lucasggmoreira.banco.domain.transacoes.model.Transacao;
+import me.lucasggmoreira.banco.domain.usuario.dto.DadosCadastroConta;
+import me.lucasggmoreira.banco.domain.usuario.model.Usuario;
 import me.lucasggmoreira.banco.infra.exception.custom.DadoInvalidoException;
 
 import java.util.List;
 
 
-@Table(name = "conta_bancaria")
+@Table(name = "contas_bancarias")
 @Entity(name = "Contas Bancarias")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,7 +32,7 @@ public class ContaBancaria {
     private Usuario usuario;
 
     @Column(unique = true, nullable = false)
-    private String conta;
+    private String numeroConta;
     private int agencia = 1;
     private double saldo;
 
@@ -43,7 +43,7 @@ public class ContaBancaria {
     public ContaBancaria(DadosCadastroConta dados, String numeroConta) {
         this.nome = dados.nome();
         this.cpf = dados.cpf();
-        this.conta = numeroConta;
+        this.numeroConta = numeroConta;
         this.saldo = 0;
     }
 
@@ -64,5 +64,9 @@ public class ContaBancaria {
         this.saldo -= valor;
     }
 
+    public void transferir(ContaBancaria contaDestino, double valor) {
+        this.saldo -= valor;
+        contaDestino.depositar(valor);
+    }
 }
 

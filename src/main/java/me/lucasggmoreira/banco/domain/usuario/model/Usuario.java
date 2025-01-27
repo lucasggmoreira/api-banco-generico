@@ -1,9 +1,9 @@
-package me.lucasggmoreira.banco.domain.usuario;
+package me.lucasggmoreira.banco.domain.usuario.model;
 
 import jakarta.persistence.*;
 import lombok.*;
 import me.lucasggmoreira.banco.domain.contabancaria.ContaBancaria;
-import me.lucasggmoreira.banco.domain.contabancaria.funcoes.GeradorNumeroConta;
+import me.lucasggmoreira.banco.domain.usuario.enums.TipoConta;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

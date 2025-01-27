@@ -1,4 +1,4 @@
-package me.lucasggmoreira.banco.domain.usuario;
+package me.lucasggmoreira.banco.domain.usuario.dto;
 
 import jakarta.validation.constraints.NotBlank;
 

@@ -1,4 +1,6 @@
-package me.lucasggmoreira.banco.domain.transacoes;
+package me.lucasggmoreira.banco.domain.transacoes.dto;
+
+import me.lucasggmoreira.banco.domain.transacoes.model.Transacao;
 
 public record DadosTransacaoDetalhado(
         Long id_transacao,
