@@ -3,8 +3,12 @@ package me.lucasggmoreira.banco.infra.exception;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.EntityNotFoundException;
+import me.lucasggmoreira.banco.infra.exception.custom.DadoExistenteException;
 import me.lucasggmoreira.banco.infra.exception.custom.DadoInvalidoException;
+import me.lucasggmoreira.banco.infra.exception.custom.NaoEncontradoException;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,7 +23,7 @@ public class TratamentoDeExceptions {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
+    @ExceptionHandler({EntityNotFoundException.class, NaoEncontradoException.class})
     public ResponseEntity tratarErro404(){
         return ResponseEntity.notFound().build();
     }
@@ -29,6 +33,17 @@ public class TratamentoDeExceptions {
         var erros = e.getFieldErrors();
         return ResponseEntity.badRequest().body(erros.stream().map(DadosErroValidacao::new).toList());
     }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity tratarErro401(){
+        return ResponseEntity.status(401).build();
+    }
+
+    @ExceptionHandler(DadoExistenteException.class)
+    public ResponseEntity tratarErro409(DadoExistenteException e){
+        return ResponseEntity.status(409).body(e.getMessage());
+    }
+
 
     public record DadosErroValidacao(String campo, String mensagem){
         public DadosErroValidacao(FieldError erro){
