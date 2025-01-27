@@ -3,13 +3,12 @@ package me.lucasggmoreira.banco.controllers;
 
 import jakarta.validation.Valid;
 import me.lucasggmoreira.banco.domain.contabancaria.DadosDetalheConta;
-import me.lucasggmoreira.banco.domain.usuario.AutenticacaoFuncoes;
-import me.lucasggmoreira.banco.domain.usuario.DadosAutenticacao;
-import me.lucasggmoreira.banco.domain.usuario.DadosCadastroConta;
+import me.lucasggmoreira.banco.domain.usuario.model.AutenticacaoFuncoes;
+import me.lucasggmoreira.banco.domain.usuario.dto.DadosAutenticacao;
+import me.lucasggmoreira.banco.domain.usuario.dto.DadosCadastroConta;
 import me.lucasggmoreira.banco.infra.security.DadosTokenJWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
