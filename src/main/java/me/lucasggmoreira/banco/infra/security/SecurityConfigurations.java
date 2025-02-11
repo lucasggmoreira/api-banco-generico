@@ -23,7 +23,6 @@ public class SecurityConfigurations{
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll();
-                    req.requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN");
                     req.requestMatchers("/auth/**").permitAll();
                     req.anyRequest().authenticated();
                 })
@@ -32,7 +31,7 @@ public class SecurityConfigurations{
     }
 
     @Bean
-        public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
