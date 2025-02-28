@@ -3,6 +3,7 @@ package me.lucasggmoreira.banco.domain.usuario.model;
 import jakarta.persistence.*;
 import lombok.*;
 import me.lucasggmoreira.banco.domain.contabancaria.ContaBancaria;
+import me.lucasggmoreira.banco.domain.usuario.dto.DadosCadastroConta;
 import me.lucasggmoreira.banco.domain.usuario.enums.TipoConta;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -39,9 +40,16 @@ public class Usuario implements UserDetails {
         this.tipoConta = TipoConta.CLIENTE;
     }
 
+    public Usuario(String login, String senha, TipoConta tipoConta) {
+        this.tipoConta = tipoConta;
+        this.login = login;
+        this.senha = senha;
+
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + tipoConta.name()));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + tipoConta.toString()));
     }
 
     @Override
