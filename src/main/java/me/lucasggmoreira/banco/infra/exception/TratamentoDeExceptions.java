@@ -6,7 +6,7 @@ import jakarta.persistence.EntityNotFoundException;
 import me.lucasggmoreira.banco.infra.exception.custom.DadoExistenteException;
 import me.lucasggmoreira.banco.infra.exception.custom.DadoInvalidoException;
 import me.lucasggmoreira.banco.infra.exception.custom.NaoEncontradoException;
-import org.apache.coyote.Response;
+import me.lucasggmoreira.banco.infra.exception.custom.TokenJWTInvalidoException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
@@ -42,6 +42,11 @@ public class TratamentoDeExceptions {
     @ExceptionHandler(DadoExistenteException.class)
     public ResponseEntity tratarErro409(DadoExistenteException e){
         return ResponseEntity.status(409).body(e.getMessage());
+    }
+
+    @ExceptionHandler(TokenJWTInvalidoException.class)
+    public ResponseEntity tratarTokenInvalido(TokenJWTInvalidoException e){
+        return ResponseEntity.status(401).body(e.getMessage());
     }
 
 
