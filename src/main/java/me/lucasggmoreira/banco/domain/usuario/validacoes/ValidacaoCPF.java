@@ -1,6 +1,6 @@
 package me.lucasggmoreira.banco.domain.usuario.validacoes;
 
-import me.lucasggmoreira.banco.domain.usuario.DadosCadastroConta;
+import me.lucasggmoreira.banco.domain.usuario.dto.DadosCadastroConta;
 import me.lucasggmoreira.banco.infra.exception.custom.DadoInvalidoException;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,16 @@ public class ValidacaoCPF implements ValidacaoContaBancaria{
 
     @Override
     public void validar(DadosCadastroConta dados) {
-        var cpf = dados.cpf().replaceAll("\\D", "");
+        validarCPF(dados.cpf());
+    }
+
+    @Override
+    public void validar(String cpf) {
+        validarCPF(cpf);
+    }
+
+    private void validarCPF(String cpf){
+         cpf = cpf.replaceAll("\\D", "");
 
         if (cpf.length() != 11 || cpf.matches("(\\d)\\1{10}")) {
             throw new DadoInvalidoException("CPF inválido");

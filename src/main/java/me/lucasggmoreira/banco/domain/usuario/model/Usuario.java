@@ -1,9 +1,10 @@
-package me.lucasggmoreira.banco.domain.usuario;
+package me.lucasggmoreira.banco.domain.usuario.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import me.lucasggmoreira.banco.domain.contabancaria.ContaBancaria;
+import me.lucasggmoreira.banco.domain.usuario.dto.DadosCadastroConta;
+import me.lucasggmoreira.banco.domain.usuario.enums.TipoConta;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,26 +12,44 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Entity
+@Table(name = "usuarios")
+@Entity(name = "Usuario")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode(of = "id")
+
 public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private long id;
+    private Long id;
+    private TipoConta tipoConta;
     private String login;
     private String senha;
+
+    @OneToOne()
+    @JoinColumn(name = "conta_bancaria_id")
+    private ContaBancaria contaBancaria;
 
     public Usuario(String login, String senha) {
         this.login = login;
         this.senha = senha;
+        this.tipoConta = TipoConta.CLIENTE;
+    }
+
+    public Usuario(String login, String senha, TipoConta tipoConta) {
+        this.tipoConta = tipoConta;
+        this.login = login;
+        this.senha = senha;
+
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + tipoConta.toString()));
     }
 
     @Override

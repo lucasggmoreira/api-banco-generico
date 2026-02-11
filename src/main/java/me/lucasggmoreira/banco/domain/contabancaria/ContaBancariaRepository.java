@@ -1,8 +1,11 @@
 package me.lucasggmoreira.banco.domain.contabancaria;
 
+import me.lucasggmoreira.banco.domain.usuario.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.security.core.userdetails.UserDetails;
 
 public interface ContaBancariaRepository extends JpaRepository<ContaBancaria, Long> {
-    UserDetails findByConta(String conta);
+    ContaBancaria findByUsuario(Usuario usuario);
+    ContaBancaria findByCpf(String cpf);
+    ContaBancaria findByNumeroConta(String agencia);
+    ContaBancaria findByAgenciaAndNumeroConta(int numeroConta, String agencia);
 }
